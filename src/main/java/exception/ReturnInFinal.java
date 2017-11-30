@@ -14,14 +14,18 @@ public class ReturnInFinal {
             return b;
         }
         finally {
-            // b = 1;
-            System.out.println("finally");
-            // return b;
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            System.out.println("正在关闭相关资源");
         }
     }
     
     public static void main(String[] args) {
         ReturnInFinal rif = new ReturnInFinal();
+        System.out.println(rif.test(1));
         System.out.println(rif.test(0));
     }
 }
