@@ -25,7 +25,7 @@ class Cartoon extends Drawing{
     }
 }
 
-public class ConstractorCallDuringInheritanceDemo {
+public class ConstructorCallDuringInheritanceDemo {
     public static void main(String[] args) {
         new Cartoon();
     }
