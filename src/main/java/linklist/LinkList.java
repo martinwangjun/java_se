@@ -26,12 +26,12 @@ public class LinkList {
      * @param d
      */
     public void insertNode(int index, int d) {
-        if(index < 0 || index > this.length() - 1) {
-            LOGGER.info("Index: " + index + " illegal.");
-            return;
-        }
         if (index == 0) {
             insertNode(d);
+            return;
+        }
+        if(index < 0 || index > this.length() - 1) {
+            LOGGER.info("Index: " + index + " illegal.");
             return;
         }
         Node temp = head;
