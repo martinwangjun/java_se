@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Configuration段有2个参数: - status : 这个用于设置log4j2自身内部的信息输出,可以不设置,当设置成trace时,会看到log4j2内部各种详细输出 
+  日志级别：TRACE < DEBUG < INFO < WARN < ERROR < FATAL,如果设置为WARN，则低于WARN的信息都不会输出 
+  - monitorInterval : Log4j能够自动检测修改配置文件和重新配置本身, 设置间隔秒数。此处表示每隔300秒重读一次配置文件 -->
+<Configuration status="error" monitorInterval="30">
+  <Properties>
+    <Property name="name1">value1</Property>
+  </Properties>
+  <!-- Appenders节点，常见的有三种子节点:Console、RollingFile、File -->
+  <Appenders>
+    <Console name="Console" target="SYSTEM_OUT">
+      <PatternLayout
+        pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n" />
+    </Console>
+    <RollingFile name="RollingFileInfo"
+      fileName="C:/dev_logs/java/info.log"
+      filePattern="C:/dev_logs/java/$${date:yyyy-MM}/info-%d{yyyy-MM-dd}-%i.log">
+      <!--控制台只输出level及以上级别的信息（onMatch），其他的直接拒绝（onMismatch） -->
+      <ThresholdFilter level="info" onMatch="ACCEPT"
+        onMismatch="DENY" />
+      <PatternLayout pattern="%d{HH:mm:ss} [%level] %c{10} - %msg%n"/>
+      <Policies>
+        <TimeBasedTriggeringPolicy />
+        <SizeBasedTriggeringPolicy
+          size="100 MB" />
+      </Policies>
+    </RollingFile>
+    <RollingFile name="RollingFileERROR"
+      fileName="C:/dev_logs/java/error.log"
+      filePattern="C:/dev_logs/java/$${date:yyyy-MM}/error-%d{yyyy-MM-dd}-%i.log">
+      <!--控制台只输出level及以上级别的信息（onMatch），其他的直接拒绝（onMismatch） -->
+      <ThresholdFilter level="error" onMatch="ACCEPT"
+        onMismatch="DENY" />
+      <PatternLayout pattern="%d{HH:mm:ss} [%level] %c{10} - %msg%n"/>
+      <Policies>
+        <TimeBasedTriggeringPolicy />
+        <SizeBasedTriggeringPolicy
+          size="100 MB" />
+      </Policies>
+    </RollingFile>
+  </Appenders>
+  <Loggers>
+    <Root level="trace">
+      <AppenderRef ref="Console" />
+      <AppenderRef ref="RollingFileInfo" />
+      <AppenderRef ref="RollingFileERROR"></AppenderRef>
+    </Root>
+  </Loggers>
+</Configuration>
